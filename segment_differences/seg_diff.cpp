@@ -2,14 +2,23 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 
+#include <pcl/visualization/cloud_viewer.h>
+
+#include <pcl/segmentation/segment_differences.h>
+
+
 #include <iostream>
+
+typedef pcl::PointXYZI PointT;
 
 
 int
 main (int argc, char** argv)
 {
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-	pcl::PointCloud<pcl::PointXYZ>::Ptr seg (new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<PointT>::Ptr cloud (new pcl::PointCloud<PointT>);
+	pcl::PointCloud<PointT>::Ptr seg (new pcl::PointCloud<PointT>);
+
+	pcl::PointCloud<PointT>::Ptr out (new pcl::PointCloud<PointT>);
 
 	// Generate pointcloud data
 	cloud->width = 10;
@@ -23,8 +32,6 @@ main (int argc, char** argv)
 		cloud->points[i].z = i;
 	}
 
-
-
 	// Generate segment data
 	seg->width = 5;
 	seg->height = 1;
@@ -36,4 +43,31 @@ main (int argc, char** argv)
 		seg->points[i].y = i;
 		seg->points[i].z = i;
 	}
+
+	seg->points[4].z = 10;
+
+	//pcl::SegmentDifferences<PointT>::Ptrpcl::PCLBase< PointT > ptr_seg_diff( new pcl::SegmentDifferences<PointT> );
+
+
+	pcl::SegmentDifferences<PointT> seg_diff;
+	/*
+	seg_diff.setTargetCloud(seg);
+	seg_diff.setInputCloud(cloud);
+	*/
+
+	seg_diff.setTargetCloud(cloud);
+	seg_diff.setInputCloud(seg);
+
+	seg_diff.setDistanceThreshold(0.1);
+
+
+	seg_diff.segment(*out);
+
+	for(size_t i=0 ; i<out->size() ; i++) {
+		std::cout << out->points[i].x << " "
+			 << out->points[i].x << " "
+			 << out->points[i].x << std::endl;
+	}
+
+	return 0;
 }
