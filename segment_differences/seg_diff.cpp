@@ -50,14 +50,9 @@ main (int argc, char** argv)
 
 
 	pcl::SegmentDifferences<PointT> seg_diff;
-	/*
-	seg_diff.setTargetCloud(seg);
-	seg_diff.setInputCloud(cloud);
-	*/
 
 	seg_diff.setTargetCloud(cloud);
 	seg_diff.setInputCloud(seg);
-
 	seg_diff.setDistanceThreshold(0.1);
 
 
@@ -65,8 +60,25 @@ main (int argc, char** argv)
 
 	for(size_t i=0 ; i<out->size() ; i++) {
 		std::cout << out->points[i].x << " "
-			 << out->points[i].x << " "
-			 << out->points[i].x << std::endl;
+			 	  << out->points[i].y << " "
+			 	  << out->points[i].z << std::endl;
+	}
+
+	cout << "\n\n\n";
+
+
+	pcl::SegmentDifferences<PointT> seg_diff2;
+	
+	seg_diff2.setTargetCloud(seg);
+	seg_diff2.setInputCloud(cloud);
+	seg_diff2.setDistanceThreshold(0.1);
+
+	seg_diff2.segment(*out);
+
+	for(size_t i=0 ; i<out->size() ; i++) {
+		std::cout << out->points[i].x << " "
+			 	  << out->points[i].y << " "
+			 	  << out->points[i].z << std::endl;
 	}
 
 	return 0;
