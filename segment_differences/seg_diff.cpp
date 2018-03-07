@@ -46,8 +46,6 @@ main (int argc, char** argv)
 
 	seg->points[4].z = 10;
 
-	//pcl::SegmentDifferences<PointT>::Ptrpcl::PCLBase< PointT > ptr_seg_diff( new pcl::SegmentDifferences<PointT> );
-
 
 	pcl::SegmentDifferences<PointT> seg_diff;
 
@@ -66,7 +64,7 @@ main (int argc, char** argv)
 
 	cout << "\n\n\n";
 
-
+	/*
 	pcl::SegmentDifferences<PointT> seg_diff2;
 	
 	seg_diff2.setTargetCloud(seg);
@@ -80,6 +78,8 @@ main (int argc, char** argv)
 			 	  << out->points[i].y << " "
 			 	  << out->points[i].z << std::endl;
 	}
+	*/
+
 
 	return 0;
 }
